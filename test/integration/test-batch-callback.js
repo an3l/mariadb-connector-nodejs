@@ -932,7 +932,7 @@ describe('batch callback', () => {
   describe('standard question mark using bulk', () => {
     const useCompression = false;
     it('simple batch, local date', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
@@ -940,14 +940,14 @@ describe('batch callback', () => {
     });
 
     it('simple batch with option', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
       simpleBatchWithOptions(useCompression, true, done);
     });
 
     it('batch without parameter', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
       base.createConnection({ compress: useCompression, bulk: true }).then((conn) => {
         conn
@@ -965,7 +965,7 @@ describe('batch callback', () => {
     });
 
     it('batch with erroneous parameter', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
       base.createConnection({ compress: useCompression, bulk: true }).then((conn) => {
         conn
@@ -988,7 +988,7 @@ describe('batch callback', () => {
     });
 
     it('simple batch offset date', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
@@ -996,46 +996,46 @@ describe('batch callback', () => {
     });
 
     it('simple batch encoding CP1251', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       simpleBatchEncodingCP1251(useCompression, true, 'local', done);
     });
 
     it('simple batch error message ', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       simpleBatchErrorMsg(useCompression, true, done);
     });
 
     it('simple batch error message packet split', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
       simpleBatchErrorSplit(useCompression, true, 'local', done);
     });
 
     it('non rewritable batch', function (done) {
-      if (process.env.SKYSQL || !supportBulk) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA || !supportBulk) this.skip();
       this.timeout(30000);
       nonRewritableBatch(useCompression, true, done);
     });
 
     it('16M+ error batch', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (maxAllowedSize <= testSize) this.skip();
       this.timeout(360000);
       bigBatchError(useCompression, true, done);
     });
 
     it('batch with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       batchWithStream(useCompression, true, done);
     });
 
     it('batch error with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       batchErrorWithStream(useCompression, true, done);
     });
@@ -1045,7 +1045,7 @@ describe('batch callback', () => {
     const useCompression = true;
 
     it('simple batch, local date', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
@@ -1053,7 +1053,7 @@ describe('batch callback', () => {
     });
 
     it('simple batch offset date', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       if (!shareConn.info.isMariaDB() && !shareConn.info.hasMinVersion(5, 6, 0)) this.skip();
@@ -1061,33 +1061,33 @@ describe('batch callback', () => {
     });
 
     it('simple batch error message ', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       simpleBatchErrorMsg(useCompression, true, done);
     });
 
     it('non rewritable batch', function (done) {
-      if (process.env.SKYSQL || !supportBulk) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA || !supportBulk) this.skip();
       this.timeout(30000);
       nonRewritableBatch(useCompression, true, done);
     });
 
     it('16M+ error batch', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (maxAllowedSize <= testSize) this.skip();
       this.timeout(360000);
       bigBatchError(useCompression, true, done);
     });
 
     it('batch with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       batchWithStream(useCompression, true, done);
     });
 
     it('batch error with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       batchErrorWithStream(useCompression, true, done);
     });
@@ -1251,32 +1251,32 @@ describe('batch callback', () => {
 
   describe('named parameter with bulk', () => {
     it('simple batch', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       simpleNamedPlaceHolders(true, done);
     });
 
     it('simple batch error', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       simpleNamedPlaceHoldersErr(true, done);
     });
 
     it('non rewritable batch', function (done) {
-      if (process.env.SKYSQL || !supportBulk) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA || !supportBulk) this.skip();
       this.timeout(30000);
       nonRewritableHoldersErr(true, done);
     });
 
     it('batch with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (!base.utf8Collation()) this.skip();
       this.timeout(30000);
       streamNamedPlaceHolders(true, done);
     });
 
     it('batch error with streams', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(30000);
       streamErrorNamedPlaceHolders(true, done);
     });

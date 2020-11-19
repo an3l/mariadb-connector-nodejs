@@ -11,7 +11,7 @@ const { assert } = require('chai');
 
 describe('cluster', function () {
   before(function (done) {
-    if (process.env.SKYSQL) this.skip();
+    if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
     shareConn
       .query('DROP TABLE IF EXISTS clusterInsert')
       .then(() => {
@@ -436,7 +436,7 @@ describe('cluster', function () {
     });
 
     it('reusing node after timeout', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       this.timeout(20000);
       const cl = get3NodeClusterWithProxy({ restoreNodeTimeout: 500 }, basePromise);
       const poolCluster = cl.cluster;
@@ -485,7 +485,7 @@ describe('cluster', function () {
     });
 
     it('server close connection during query', function (done) {
-      if (process.env.SKYSQL) this.skip();
+      if (process.env.SKYSQL || process.env.SKYSQL_HA) this.skip();
       if (process.env.MAXSCALE_TEST_DISABLE) this.skip();
       this.timeout(10000);
       const poolCluster = basePromise.createPoolCluster({});
